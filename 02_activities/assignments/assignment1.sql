@@ -5,7 +5,7 @@
 --SELECT
 /* 1. Write a query that returns everything in the customer table. */
 SELECT * 
-FROM customer
+FROM customer;
 
 
 /* 2. Write a query that displays all of the columns and 10 rows from the cus- tomer table, 
@@ -13,7 +13,7 @@ sorted by customer_last_name, then customer_first_ name. */
 SELECT *
 FROM customer
 ORDER BY customer_last_name, customer_first_name
-LIMIT 10
+LIMIT 10;
 
 
 --WHERE
@@ -21,12 +21,12 @@ LIMIT 10
 -- option 1
 SELECT *
 FROM customer_purchases
-WHERE product_id = 4 OR product_id = 9
+WHERE product_id = 4 OR product_id = 9;
 
 -- option 2
 SELECT *
 FROM customer_purchases
-WHERE product_id IN (4,9)
+WHERE product_id IN (4,9);
 
 
 /*2. Write a query that returns all customer purchases and a new calculated column 'price' (quantity * cost_to_customer_per_qty), 
@@ -37,12 +37,12 @@ filtered by vendor IDs between 8 and 10 (inclusive) using either:
 -- option 1
 SELECT *, (quantity * cost_to_customer_per_qty) AS price
 FROM customer_purchases
-WHERE vendor_id >= 8 AND vendor_id <= 10
+WHERE vendor_id >= 8 AND vendor_id <= 10;
 
 -- option 2
 SELECT *, (quantity * cost_to_customer_per_qty) AS price
 FROM customer_purchases
-WHERE vendor_id BETWEEN 8 AND 10
+WHERE vendor_id BETWEEN 8 AND 10;
 
 
 --CASE
@@ -58,7 +58,7 @@ SELECT product_id, product_name
 			THEN NULL
 		ELSE 'bulk'
 		END AS prod_qty_type
-FROM product 
+FROM product; 
 
 
 /* 2. We want to flag all of the different types of pepper products that are sold at the market. 
@@ -77,7 +77,7 @@ SELECT product_id, product_name
 			THEN 1
 		ELSE 0
 		END AS pepper_flag
-FROM product 
+FROM product;
 
 
 --JOIN
@@ -87,7 +87,7 @@ SELECT v.vendor_id, vendor_name, market_date
 FROM vendor AS v
 INNER JOIN vendor_booth_assignments AS vba
 ON v.vendor_id = vba.vendor_id
-ORDER BY vendor_name, market_date
+ORDER BY vendor_name, market_date;
 
 
 
@@ -99,7 +99,7 @@ at the farmer’s market by counting the vendor booth assignments per vendor_id.
 SELECT vendor_id, count(vendor_id)
 FROM vendor_booth_assignments
 GROUP BY vendor_id 
-ORDER BY vendor_id
+ORDER BY vendor_id;
 
 
 /* 2. The Farmer’s Market Customer Appreciation Committee wants to give a bumper 
@@ -115,7 +115,7 @@ INNER JOIN (
 	GROUP BY cp.customer_id
 	HAVING total_spent > 2000
 ) AS x ON c.customer_id = x.customer_id
-ORDER BY customer_last_name, customer_first_name
+ORDER BY customer_last_name, customer_first_name;
 
 
 --Temp Table
@@ -149,7 +149,7 @@ SELECT
 	strftime('%m',market_date) AS month,
 	strftime('%Y',market_date) AS year
 FROM customer_purchases
-ORDER BY market_date, customer_id
+ORDER BY market_date, customer_id;
 
 
 /* 2. Using the previous query as a base, determine how much money each customer spent in April 2022. 
@@ -164,5 +164,5 @@ SELECT
 	sum((quantity * cost_to_customer_per_qty)) AS total_spent
 FROM customer_purchases
 WHERE month = '04' AND year = '2022'
-GROUP BY customer_id
+GROUP BY customer_id;
 
