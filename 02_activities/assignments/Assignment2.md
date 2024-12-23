@@ -54,7 +54,18 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 **HINT:** search type 1 vs type 2 slowly changing dimensions. 
 
 ```
-Your answer...
+[Type 1 (overwrites, does not retain history)]:
+SELECT customer_id, customer_address, customer_postal_code, last_update
+FROM CUSTOMER_ADDRESS
+
+Each update would insert into the same customer_id row.
+
+
+[Type 2 (adds new row, maintains history)]:
+SELECT version_timestamp, customer_id, customer_address, customer_postal_code
+FROM CUSTOMER_ADDRESS
+
+Each update would insert a new row with a unique version_timestamp to store a history of updates on the same customer_id.
 ```
 
 ***
